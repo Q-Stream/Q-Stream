@@ -7,6 +7,9 @@
 To make a Media Player which can run any online Video from different sites like YouTube, Twitch, etc.
 
 ## Tech Stack - 
+```
 - Python
 - PyQt5
+- Flask
 - Streamlink
+```
