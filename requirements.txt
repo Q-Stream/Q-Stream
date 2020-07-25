@@ -1,0 +1,7 @@
+# Used by pip to install required python packages
+# Usage: pip install -r requirements.txt
+
+PyQt5>=5.14.2
+streamlink>=1.4.1
+PyAutoGUI>=0.9.50
+Flask>=1.1.2
