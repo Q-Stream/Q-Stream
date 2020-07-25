@@ -10,6 +10,7 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QLabel,
 import os
 import requests, json, pickle, streamlink
 from translate import translateLang
+import pyautogui, uuid, getpass
 
 class window(QWidget):
     def leaveEvent(self, event):
@@ -72,7 +73,7 @@ class VolSlider(QSlider):
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(550, 369)
+        Form.resize(1200, 720)
         Form.setMinimumSize(QtCore.QSize(200, 199))
         Form.setStyleSheet("background-color:black;")
         
@@ -115,7 +116,7 @@ class Ui_Form(object):
         self.Player_name.setSizePolicy(sizePolicy)
         self.Player_name.setStyleSheet("QLabel\n"
                                         "    {\n"
-                                        "    font: 9pt \"Arial Rounded MT Bold\";\n"
+                                        "    font: 12pt \"Helvetica\";\n"
                                         "    color: white;\n"
                                         "    border: 0px solid #076100;\n"
                                         "    }")
@@ -344,6 +345,13 @@ class Ui_Form(object):
         self.miniplayer_button.setText("")
         self.miniplayer_button.setObjectName("miniplayer_button")
         self.horizontalLayout_4.addWidget(self.miniplayer_button)
+
+        self.open_File_button = QtWidgets.QPushButton(self.frame_2)
+        self.open_File_button.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.open_File_button.setStyleSheet("QPushButton{image:url(icon_sets/new_file/new_file.png);width:22px;height:22px }\n")
+        self.open_File_button.setText("")
+        self.open_File_button.setObjectName("playback_button")
+        self.horizontalLayout_4.addWidget(self.open_File_button)
 
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem1)
@@ -599,6 +607,7 @@ class Ui_Form(object):
         self.playback_button.clicked.connect(self.stopplayback)
         self.always_on_top_button.clicked.connect(self.checkOnTop)
         self.play_button.clicked.connect(self.play)
+        self.open_File_button.clicked.connect(self.openFile)
         # self.video_setting_button.clicked.connect(self.handleQuality)
         self.setting_button.clicked.connect(self.handleSetting)
         self.Quality_box.currentTextChanged.connect(self.handleQuality)
@@ -615,6 +624,8 @@ class Ui_Form(object):
         shortcut.activated.connect(self.fullscreen_video)
         shortcut = QShortcut(QKeySequence('c'), self.video_playback)
         shortcut.activated.connect(self.setupMiniPlayer)
+        shortcut = QShortcut(QKeySequence('o'), self.video_playback)
+        shortcut.activated.connect(self.openFile)
         shortcut = QShortcut(QKeySequence('a'), self.video_playback)
         shortcut.activated.connect(self.checkOnTop)
         shortcut = QShortcut(QKeySequence("Return"), self.video_playback)
@@ -839,6 +850,24 @@ class Ui_Form(object):
             finally:
                 self.url_box.setCurrentText("")
 
+    def openFile(self):
+        print('[ ! OPEN FILE ]')
+        username = getpass.getuser()
+        if sys.platform == 'win32':
+            path = 'C:/Users/' + username + '/Videos/'
+        elif sys.platform == 'linux' or sys.platform == 'Darwin':    
+            path = '/home/' + username + '/Videos/' 
+
+        formats = str.join(' ',
+            ['*.%s' %str(fmt).strip('b').strip("'") for fmt in QtGui.QMovie.supportedFormats()]
+        )
+
+        fileName, _ = QFileDialog.getOpenFileName(self.video_playback, "Select media file",
+                path, "Video Files (*.mp4 *.flv *.ts *.mts *.avi *.mkv)")
+        if fileName != '':
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
+            self.play_video()
+
     # def decodeLink(self,url):
     #     try:
     #         streams = streamlink.streams(url)
@@ -931,7 +960,7 @@ class Ui_Form(object):
         self.mediaPlayer.setVolume(vol)
 
     def screenshot(self):
-        import pyautogui, uuid, getpass
+        
 
         print('[ ! SCREENSHOT ]')
         wincen = Form.geometry()
