@@ -832,7 +832,8 @@ class Ui_Form(object):
         if self.url_box.currentText() != '':
             print('[ ! GETTING VIDEO ONLINE ]')
             fileName = self.url_box.currentText()
-            res = requests.get('https://mediaplayerserver.herokuapp.com/', params={"key": fileName})
+            # res = requests.get('https://mediaplayerserver.herokuapp.com/', params={"key": fileName})
+            res = requests.get('https://q-stream-media-player.herokuapp.com/', params={"key": fileName})
             try:
                 self.streams = json.loads(res.text)
                 try:
