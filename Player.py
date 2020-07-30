@@ -864,7 +864,7 @@ class Ui_Form(object):
         )
 
         fileName, _ = QFileDialog.getOpenFileName(self.video_playback, "Select media file",
-                path, "Video Files (*.mp4 *.flv *.ts *.mts *.avi *.mkv)")
+                path, "Video Files (*.mp3 *.mp4 *.flv *.ts *.mts *.avi *.mkv)")
         if fileName != '':
             self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
             self.play_video()
