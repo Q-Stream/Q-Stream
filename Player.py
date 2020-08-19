@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QLabel,
                              QDialog)
 import os
 import requests, json, pickle, streamlink
-from translate import translateLang
+from lib.translate import translateLang
 import pyautogui, uuid, getpass
 
 class window(QWidget):
