@@ -9,7 +9,7 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QLabel,
                              QDialog)
 import os
 import requests, json, pickle, streamlink
-from lib.translate import translateLang
+
 import pyautogui, uuid, getpass
 
 class window(QWidget):
@@ -1019,7 +1019,7 @@ class Ui_Form(object):
         self.mediaPlayer.play()
 
     def handleSetting(self):
-        from setting import SettingDialog
+        from lib.setting import SettingDialog
         dlg = SettingDialog()
         dlg.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         dlg.exec_()

@@ -3,7 +3,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 import os, pickle, getpass, sys, uuid
-from translate import translateLang
+from lib.translate import translateLang
 
 class SettingDialog(QDialog):
     _translate = QtCore.QCoreApplication.translate
