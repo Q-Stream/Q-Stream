@@ -73,7 +73,7 @@ class VolSlider(QSlider):
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(1200, 720)
+        Form.resize(640, 400)
         Form.setMinimumSize(QtCore.QSize(200, 199))
         Form.setStyleSheet("background-color:black;")
         
