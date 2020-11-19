@@ -25,6 +25,6 @@ To make a Media Player which can run any online Video from different sites like 
 2. RUN ```Player.py```
 ## For Ubuntu
   1. Run 
-      sudo apt install gstreamer1.0-plugins-bad-faad
+      ```sudo apt install gstreamer1.0-plugins-bad-faad
       sudo apt-get install gstreamer1.0-libav
-      sudo apt-get install --reinstall libxcb-xinerama0
+      sudo apt-get install --reinstall libxcb-xinerama0```
