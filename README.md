@@ -11,18 +11,18 @@ Q-Stream is an Media Player with key features:
 
 
 ## Find more here :
-       **[Purpose and scope](#purpose-and-scope)**<br>
-       **[You'll Need:](#you'll-need)**<br> 
-       **[For Ubuntu](#for-ubuntu)**<br>
-       **[Using Q-Stream](#using-Q-stream)**<br>
-       **[Resources](#resources)**<br>
-       **[FAQ](#faq)**<br>
+       1. Purpose and scope
+       2. What will You Need?
+       3. For Ubuntu
+       4. Using Q-Stream
+       5. Resources
+       6. FAQ
 
 ## Purpose and scope :
 
 Q-Stream provides alternative to Media Players for playing videos over the internet for a better experience. You can run it on any device provided that is has an internet connection.
 
-## You'll Need:
+## What will You Need?
 
 ⋅⋅* [Python](https://www.python.org/downloads/)
 ⋅⋅* [PyQt5](https://pypi.org/project/PyQt5/#files)
@@ -43,7 +43,12 @@ You can get it from the links specified or run pip install ```-r requirements.tx
 
 ## Using Q-Stream 
 You can start by forking and cloning this repository on your local machine using 
+
 ```https://github.com/Q-Stream/Q-Stream.git```
+
+![alt text](https://github.com/Pranjal-2001/Q-Stream/blob/master/icon_sets/snapshot/QStream.png "showcasing fork ")
+
+
 
 ## Resources -
 
@@ -52,3 +57,6 @@ You can start by forking and cloning this repository on your local machine using
 ## FAQ -
 
 1. What options does Q-Stream provide?
+
+2. Is streaming videos on Q-Stream for free?
+Yes, it is free as it is entirely an open source project.
