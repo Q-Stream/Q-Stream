@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimediaWidgets, QtMultimedia
 from PyQt5.QtGui import QIcon, QFont, QPalette, QColor, QMoveEvent, QKeySequence, QPainter, QImage
-from PyQt5.QtCore import QDir, Qt, QUrl, QSize, Qt, QPoint, QRect, pyqtSignal
+from PyQt5.QtCore import QDir, QUrl, QSize, Qt, QPoint, QRect, pyqtSignal
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer, QVideoFrame, QAbstractVideoBuffer, QVideoSurfaceFormat, \
     QAbstractVideoSurface
 from PyQt5.QtMultimediaWidgets import QVideoWidget
@@ -13,13 +13,15 @@ import requests, json, pickle, streamlink
 import pyautogui, uuid, getpass
 
 class window(QWidget):
-    def leaveEvent(self, event):
+    @staticmethod
+    def leaveEvent(event):
         if ui.isMini :
             ui.frame_2.hide()
             ui.pos_frame.hide()
             ui.frame.hide()
 
-    def enterEvent(self, event):
+    @staticmethod
+    def enterEvent(event):
         if ui.isMini:
             ui.frame_2.show()
             ui.pos_frame.show()
@@ -29,13 +31,15 @@ class Videowidget(QVideoWidget):
     def __init__(self,master):
         super().__init__(parent = master)
 
-    def mouseMoveEvent (self, event):
+    @staticmethod
+    def mouseMoveEvent (event):
         if event.buttons() == Qt.LeftButton:
             Form.move(event.globalPos() \
                         - QPoint(int(Form.geometry().width() / 2), int(Form.geometry().height() / 2)))
             event.accept()  
 
-    def mouseDoubleClickEvent (self, event):
+    @staticmethod
+    def mouseDoubleClickEvent (event):
         if event.buttons() == Qt.LeftButton:
             ui.fullscreen_video()
 
@@ -762,7 +766,8 @@ class Ui_Form(object):
             
             self.show_all()
 
-    def load(self):
+    @staticmethod
+    def load():
         scorefile = "db.bat"
         if os.path.exists(scorefile):
             with open(scorefile, 'rb') as sf:
@@ -775,8 +780,8 @@ class Ui_Form(object):
         return scores
 
     
-
-    def scor_func(self, url):
+    @staticmethod
+    def scor_func(url):
         scorefile = "db.bat"
         if os.path.exists(scorefile):
             with open(scorefile, 'rb') as sf:
@@ -998,7 +1003,7 @@ class Ui_Form(object):
 
                 
     def getFormat(self):
-        li = [k for k in self.streams.keys()]
+        li = list(self.streams.keys())
         for q in li:
             if q.startswith('audio'):
                 li.remove(q)
@@ -1018,7 +1023,8 @@ class Ui_Form(object):
         self.setPosition(pos)
         self.mediaPlayer.play()
 
-    def handleSetting(self):
+    @staticmethod
+    def handleSetting():
         from lib.setting import SettingDialog
         dlg = SettingDialog()
         dlg.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
@@ -1060,7 +1066,8 @@ class Ui_Form(object):
         self.setVolume(self.mediaPlayer.volume() - 10)
         print("Volume: " + str(self.mediaPlayer.volume()))
 
-    def max(self):
+    @staticmethod
+    def max():
         if not Form.isMaximized():
             print("[! Window is Maximized]")
             Form.showMaximized()
@@ -1068,7 +1075,8 @@ class Ui_Form(object):
             print("[! Window is Normal]")
             Form.showNormal()
 
-    def min(self):
+    @staticmethod
+    def min():
         if not Form.isMinimized():
             print("[! Window is Minimized]")
             Form.showMinimized()
