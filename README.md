@@ -29,10 +29,12 @@ Q-Stream provides alternative to Media Players for playing videos over the inter
  * [Flask](https://pypi.org/project/Flask/#files)
  * [Streamlink](https://streamlink.github.io/install.html)
  * [PyAutoGUI](https://pypi.org/project/PyAutoGUI/#files)
+
 RUN ```Player.py```
+
 You can get it from the links specified or run pip install ```-r requirements.txt```
 
-## For Ubuntu
+## For Ubuntu-
   1. Run 
       ```
       sudo apt install gstreamer1.0-plugins-bad-faad
@@ -41,7 +43,7 @@ You can get it from the links specified or run pip install ```-r requirements.tx
       
       ```
 
-## Using Q-Stream 
+## Using Q-Stream-
 You can start by forking and cloning this repository on your local machine using 
 
 ```https://github.com/Q-Stream/Q-Stream.git```
