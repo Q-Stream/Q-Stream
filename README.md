@@ -5,9 +5,9 @@
 <img align="center"  height="300" src="https://github.com/Q-Stream/media-files/blob/master/assets/window.png">
 
 Q-Stream is an Media Player with key features:
-⋅⋅* It can support any online video from numerous platforms like Youtube ,Vimeo ,Twitch ,Veoh and many more.
-⋅⋅* Can be adapted on various devices.
-⋅⋅* Allows you to organise your multimedia collection
+1. It can support any online video from numerous platforms like Youtube ,Vimeo ,Twitch ,Veoh and many more.
+2. Can be adapted on various devices.
+3. Allows you to organise your multimedia collection
 
 
 ## Find more here :
@@ -24,11 +24,11 @@ Q-Stream provides alternative to Media Players for playing videos over the inter
 
 ## What will You Need?
 
-⋅⋅* [Python](https://www.python.org/downloads/)
-⋅⋅* [PyQt5](https://pypi.org/project/PyQt5/#files)
-⋅⋅* [Flask](https://pypi.org/project/Flask/#files)
-⋅⋅* [Streamlink](https://streamlink.github.io/install.html)
-⋅⋅* [PyAutoGUI](https://pypi.org/project/PyAutoGUI/#files)
+ * [Python](https://www.python.org/downloads/)
+ * [PyQt5](https://pypi.org/project/PyQt5/#files) 
+ * [Flask](https://pypi.org/project/Flask/#files)
+ * [Streamlink](https://streamlink.github.io/install.html)
+ * [PyAutoGUI](https://pypi.org/project/PyAutoGUI/#files)
 RUN ```Player.py```
 You can get it from the links specified or run pip install ```-r requirements.txt```
 
@@ -48,7 +48,8 @@ You can start by forking and cloning this repository on your local machine using
 
 ![alt text](https://github.com/Pranjal-2001/Q-Stream/blob/master/icon_sets/snapshot/QStream.png "showcasing fork ")
 
-
+Make sure you download all the files stated in requirements.
+Then you are good to start!
 
 ## Resources -
 
@@ -58,5 +59,12 @@ You can start by forking and cloning this repository on your local machine using
 
 1. What options does Q-Stream provide?
 
+It provides and efficient way to stream any videos online for a greater experience. You can save history and mark "favourite" for future convenience.
+
 2. Is streaming videos on Q-Stream for free?
+
 Yes, it is free as it is entirely an open source project.
+
+                                    
+
+                                    
