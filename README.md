@@ -20,7 +20,7 @@ Q-Stream is an Media Player with key features:
 
 ## Purpose and scope :
 
-Q-Stream provides alternative to Media Players for playing videos over the internet for a better experience. You can run it on any device provided that is has an internet connection.
+Q-Stream provides alternative to Media Players for playing videos over the internet for a better experience. You can run it on any device (web as well as Mobile) . Currently, you can use it as a desktop application for uninterrupted streaming!
 
 ## What will You Need?
 
@@ -65,6 +65,8 @@ It provides and efficient way to stream any videos online for a greater experien
 
 Yes, it is free as it is entirely an open source project.
 
-                                    
+3. What is the next step of Q-Stream?
+
+We are planning to develop a crossplatform version for Linux and macOS.                                    
 
                                     
