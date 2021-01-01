@@ -57,7 +57,7 @@ Then you are good to start!
 
 [Icons](https://icons8.com/) | [PyQt5](https://www.youtube.com/watch?v=Vde5SH8e1OQ&list=PLzMcBGfZo4-lB8MZfHPLTEHO9zJDDLpYj) | [Streamlink](https://streamlink.github.io/api_guide.html) | [Video Encoder(Windows)](https://files3.codecguide.com/K-Lite_Codec_Pack_1560_Basic.exe) | [Qt Designer](https://build-system.fman.io/qt-designer-download)
 
-## 💥 How to Contribute ?
+## How to Contribute? 💥 
 - If you wish to contribute kindly check the [CONTRIBUTION.md](https://github.com/Q-Stream/Q-Stream/blob/master/CONTRIBUTION.md)🤝
 
 ## FAQ -
