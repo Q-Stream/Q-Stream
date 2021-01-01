@@ -29,8 +29,8 @@ Refer to the following articles on the basics of Git and Github and can also con
 
 ## ⭐HOW TO MAKE A PULL REQUEST:
 
-**1.** Fork [this]https://github.com/Q-Stream/Q-Stream) repository.
-Click on the <a href="https://github.com/ricardoprins/stockinator"><img src="https://img.icons8.com/ios/24/000000/code-fork.png"></a> symbol at the top right corner.
+**1.** Fork [this](https://github.com/Q-Stream/Q-Stream) repository.
+Click on the <a href="https://github.com/Q-Stream/Q-Stream"><img src="https://img.icons8.com/ios/24/000000/code-fork.png"></a> symbol at the top right corner.
 
 **2.** Clone the forked repository. Open terminal and type:
 
