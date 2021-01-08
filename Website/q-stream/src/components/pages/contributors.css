@@ -1,0 +1,19 @@
+.jumbo{
+    width: 100%;
+    opacity: 0.9;
+    height: 250px;
+}
+
+.cont img{
+    position: absolute;
+    left: 35%;
+    top: 60%;
+}
+
+@media (max-width: 992px) {
+    .jumbo{
+        top: 30.5%;
+    }
+}
+
+

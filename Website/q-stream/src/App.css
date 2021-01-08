@@ -1,0 +1,9 @@
+.App{
+  background-image: url("./Images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: fixed;
+  background-position: center;
+  min-height: 100%;
+  min-width: 100%;
+}
