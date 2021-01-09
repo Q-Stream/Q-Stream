@@ -1,0 +1,50 @@
+.jumbo-abt{
+    top: 20%;
+    width: 100%;
+    height: 400px;
+}
+
+.cont-abt h3{
+    font-style: italic;
+}
+
+.cont-abt h2{
+    font-family: Algerian;
+}
+
+.breadcrumb-item{
+    color: black ! important;
+}
+
+@media (min-width: 768px) and (max-width:991.98px) {
+    .jumbo-abt{
+        top: 30.5%;
+    }
+}
+
+@media  (max-width: 768px) {
+    .jumbo-abt{
+        top: 30.5%;
+    }
+    .cont-abt h3{
+        font-size: 22px;
+    }
+    .cont-abt h2{
+        font-size: 18px;
+    }
+    .cont-abt h1{
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 576px) {
+    .cont-abt h3{
+        font-size: 18px;
+    }
+    .cont-abt h2{
+        font-size: 14px;
+    }
+    .cont-abt h1{
+        font-size: 22px;
+    }
+}

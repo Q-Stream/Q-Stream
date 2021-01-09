@@ -1,0 +1,121 @@
+.logo{
+    border-radius: 50%;
+}
+
+.container-fluid img{
+    top: 30%;
+}
+
+.jumbotron-fluid{
+    position: absolute;
+    top: 30%;
+    text-align: center;
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.8;
+    height: 200px;
+    padding: 20px;
+}
+
+.container-fluid h1{
+    font-family: "Algerian";
+}
+
+.container-fluid h2{
+    font-family: cursive;
+}
+
+.use{
+    background-color: #2c3e50;
+    color: white;
+    position: absolute;
+    top: 70%;
+    left: 39%;
+    font-size: 20px;
+}
+
+.dnld{
+    background-color: green;
+    color: white;
+    position: absolute;
+    top: 70%;
+    left: 53%;
+    font-size: 20px;
+}
+
+.dnld:hover{
+    color: green;
+    background-color: white;
+}
+
+.use:hover{
+    color: yellow;
+    background-color: #2c3e50;
+}
+
+.modal-dialog{
+    top: 18%;
+    padding: 0;
+}
+
+@media (max-width: 575.98px) {
+    .use{
+        left: 20%;
+        font-size: 14px;
+    }
+    .dnld{
+        left: 60%;
+        font-size: 14px;
+    }
+    .container-fluid h1{
+        font-size: 22px;
+    }
+    .container-fluid h2{
+        font-size: 18px;
+    }
+    .logo{
+        height: 30px;
+        width: 30px;
+    }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+    .use{
+        left: 30%;
+    }
+    .dnld{
+        left: 60%;
+    }
+    .container-fluid h1{
+        font-size: 30px;
+    }
+    .container-fluid h2{
+        font-size: 26px;
+    }
+    .logo{
+        height: 40px;
+        width: 40px;
+    }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .use{
+        left: 30%;
+    }
+    .dnld{
+        left: 60%;
+    }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .use{
+        left: 35%;
+    }
+    .dnld{
+        left: 55%;
+    }
+}
+
