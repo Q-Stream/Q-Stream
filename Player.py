@@ -24,8 +24,6 @@ class window(QWidget):
 
     @staticmethod
     def enterEvent(event):
-        
-        if ui.isMini:
             ui.frame_2.show()
             ui.pos_frame.show()
             ui.frame.show()
@@ -484,7 +482,7 @@ class Ui_Form(object):
                                         "    }")
         self.volume_percentage.setObjectName("volume_status")
         self.volume_percentage.setMinimumWidth(35)
-        self.volume_percentage.setText(" 75 %")
+        self.volume_percentage.setText(" 20 %")
         self.horizontalLayout_4.addWidget(self.volume_percentage)
 
         self.verticalLayout.addWidget(self.frame_2)
@@ -572,13 +570,14 @@ class Ui_Form(object):
         
         self.url_box.setMaxVisibleItems(100)
         self.url_box.setMaxCount(100)
-        self.url_box.setInsertPolicy(QtWidgets.QComboBox.InsertAtCurrent)
+        self.url_box.setInsertPolicy(QtWidgets.QComboBox.InsertAfterCurrent)
         self.url_box.setSizeAdjustPolicy(QtWidgets.QComboBox.AdjustToContentsOnFirstShow)
         self.url_box.setMinimumContentsLength(2)
         self.url_box.setIconSize(QtCore.QSize(20, 20))
         self.url_box.setDuplicatesEnabled(False)
         self.url_box.setFrame(True)
         self.url_box.setObjectName("url_box")
+        
         self.horizontalLayout_5.addWidget(self.url_box)
         
 
@@ -609,6 +608,7 @@ class Ui_Form(object):
         self.time_status.setText(_translate("Form", "00:00:00"))
         self.backslash.setText(_translate("Form", "/"))
         self.duration_status.setText(_translate("Form", "00:00:00"))
+        
         # self.enter_url_label.setText(_translate("Form", statusList[4]))
 
 
@@ -617,8 +617,8 @@ class Ui_Form(object):
 
         # Set intial Volume
         self.volumeslider.setRange(0, 100)
-        self.volumeslider.setValue(75)
-        self.mediaPlayer.setVolume(75)
+        self.volumeslider.setValue(20)
+        self.mediaPlayer.setVolume(20)
         self.position_slider.setRange(0, 100)
 
         # connecting buttons
@@ -887,7 +887,7 @@ class Ui_Form(object):
             except json.JSONDecodeError:
                 print("[ ! Error NoPluginError]")
             finally:
-                self.url_box.setCurrentText("")
+                self.url_box.clearEditText()
                 self.url_box.clearFocus()
 
     def openFile(self):
