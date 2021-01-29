@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimediaWidgets, QtMultimedia
-from PyQt5.QtGui import QIcon, QFont, QPalette, QColor, QMoveEvent, QKeySequence, QPainter, QImage
+from PyQt5.QtGui import QFocusEvent, QIcon, QFont, QPalette, QColor, QMoveEvent, QKeySequence, QPainter, QImage
 from PyQt5.QtCore import QDir, QUrl, QSize, Qt, QPoint, QRect, pyqtSignal
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer, QVideoFrame, QAbstractVideoBuffer, QVideoSurfaceFormat, \
     QAbstractVideoSurface
@@ -8,20 +8,23 @@ from PyQt5.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QLabel,
                              QPushButton, QSizePolicy, QSlider, QStyle, QVBoxLayout, QWidget, QStatusBar, QShortcut,
                              QDialog)
 import os
-import requests, json, pickle, streamlink
+import requests, json, pickle
 
 import pyautogui, uuid, getpass
 
 class window(QWidget):
+    import time
     @staticmethod
     def leaveEvent(event):
-        if ui.isMini :
+        
+        if ui.isMini:
             ui.frame_2.hide()
             ui.pos_frame.hide()
             ui.frame.hide()
 
     @staticmethod
     def enterEvent(event):
+        
         if ui.isMini:
             ui.frame_2.show()
             ui.pos_frame.show()
@@ -210,7 +213,7 @@ class Ui_Form(object):
                                            "QSlider::groove:horizontal {\n"
                                            "    border: 1px solid white;\n"
                                            "    height: 8px;\n"
-                                           "    background: qlineargradient(y1: 0, y2: 1,stop: 0 #2e3436, stop: 1.0 #000000);\n"
+                                           "    background: qlineargradient(y1: 0, y2: 1,stop: 0 #2e3436, stop: 1.0 #353941);\n"
                                            "}\n"
                                            " QSlider::sub-page:horizontal {\n"
                                            "    background:qlineargradient( y1: 0, y2: 1,\n"
@@ -400,13 +403,13 @@ class Ui_Form(object):
                                        "    font-size: 8pt;\n"
                                        "    font-weight: bold;\n"
                                     #    "    width: 41px;\n"
-                                       "    background-color: #000000;\n"
+                                       "    background-color: #353941;\n"
                                        "    }\n"
                                        "    QComboBox QAbstractItemView \n"
                                        "    {\n"
                                        "    background: #fcffff;\n"
                                        "    border: 2px solid darkgray;\n"
-                                       "    selection-background-color: #000000;\n"
+                                       "    selection-background-color: #353941;\n"
                                        "    }\n"
     
                                        "QComboBox::drop-down {\n"
@@ -460,7 +463,7 @@ class Ui_Form(object):
                                         "    height: 5px;\n"
                                         "}\n"
                                         "QSlider::handle:horizontal:hover {\n"
-                                        "    background: black;\n"
+                                        "    background: #353941;\n"
                                         "    height: 5px;\n"
                                         "    width: 5px;\n"
                                         "    border: 1px solid #0074e0;\n"
@@ -535,19 +538,25 @@ class Ui_Form(object):
                                    "    {\n"
                                    "    border: 2px solid #0074e0;\n"
                                    "    color: #fcffff;\n"
-                                   "    font-size: 8pt;\n"
-                                   "    font-weight: bold;\n"
-                                   "    background-color: #000000;\n"
-                                   "    border-radius: 6px;\n"
+                                   "    font-size: 10pt;\n"
+                                   "    font-family: Arial;\n"
+                                   "    font-weight: Bold;\n"
+                                   "    background-color: #353941;\n"
+                                   "    border-radius: 5px;\n"
                                    "    }\n"
                                    "    QComboBox QAbstractItemView \n"
                                    "    {\n"
-                                   "    background: #fcffff;\n"
+                                   "    background: #dddddd;\n"
                                    "    border: 2px solid darkgray;\n"
-                                   "    selection-background-color: #000000;\n"
+                                   "    selection-background-color: #5a5a5a;\n"
                                    "    }\n"
                                    "QComboBox::down-arrow {\n"
-                                   "     image: url(icon_sets/url/url4.png)\n"
+                                   "    width : 20px\n"
+                                   "    background-color: #5f85db\n"
+                                   "}\n"
+                                   "QComboBox::down-arrow:pressed\n"
+                                   "{\n"
+                                   "background-color : #5f85db;\n"
                                    "}\n"
                                    "QComboBox::drop-down {\n"
                                    "    subcontrol-origin: padding;\n"
@@ -558,8 +567,9 @@ class Ui_Form(object):
                                    "    border-bottom-right-radius: 3px;\n"
                                    "}")
         self.url_box.setInputMethodHints(QtCore.Qt.ImhUrlCharactersOnly)
+        
         self.url_box.setEditable(True)
-        self.url_box.setCurrentText("")
+        
         self.url_box.setMaxVisibleItems(100)
         self.url_box.setMaxCount(100)
         self.url_box.setInsertPolicy(QtWidgets.QComboBox.InsertAtCurrent)
@@ -570,6 +580,16 @@ class Ui_Form(object):
         self.url_box.setFrame(True)
         self.url_box.setObjectName("url_box")
         self.horizontalLayout_5.addWidget(self.url_box)
+        
+
+        self.playOnline_button = QtWidgets.QPushButton(self.frame)
+        self.playOnline_button.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.playOnline_button.setStyleSheet("QPushButton{image : url(icon_sets/globe.png) }\n")
+        self.playOnline_button.setText("")
+        self.playOnline_button.setObjectName("playOnline_button")
+        self.horizontalLayout_5.addWidget(self.playOnline_button)
+
+
         self.verticalLayout.addWidget(self.frame)
 
         sizegrip_1 = QtWidgets.QSizeGrip(Form)
@@ -618,6 +638,7 @@ class Ui_Form(object):
         self.cross_button.clicked.connect(self.exit)
         self.maximize_button.clicked.connect(self.max)
         self.minimize_button.clicked.connect(self.min)
+        self.playOnline_button.clicked.connect(self.onlineThread)
 
         # Shortcuts
         shortcut = QShortcut(QKeySequence('Esc'), self.video_playback)
@@ -633,7 +654,7 @@ class Ui_Form(object):
         shortcut = QShortcut(QKeySequence('a'), self.video_playback)
         shortcut.activated.connect(self.checkOnTop)
         shortcut = QShortcut(QKeySequence("Return"), self.video_playback)
-        shortcut.activated.connect(self.playOnline)
+        shortcut.activated.connect(self.onlineThread)
         shortcut = QShortcut(QKeySequence('m'), self.video_playback)
         shortcut.activated.connect(self.mute)
         shortcut = QShortcut(QKeySequence(Qt.Key_Right), self.video_playback)
@@ -707,6 +728,7 @@ class Ui_Form(object):
         self.frame_3.close()
         # self.frame.close()
         self.url_box.close()
+        self.playOnline_button.close()
         self.playback_button.close()
         self.screenshot_button.close()
         self.Quality_box.close()
@@ -718,6 +740,7 @@ class Ui_Form(object):
         self.frame_3.show()
         # self.frame.show()
         self.url_box.show()
+        self.playOnline_button.show()
         self.playback_button.show()
         self.screenshot_button.show()
         self.Quality_box.show()
@@ -739,21 +762,21 @@ class Ui_Form(object):
 
     def miniProperty(self):
         self.video_playback.setMinimumSize(QSize(200,100))
-        self.video_playback.resize(QSize(550,270))
-        Form.resize(QSize(550,270))
+        # self.video_playback.resize(QSize(550,270))
+        # Form.resize(QSize(550,270))
         Form.setMinimumSize(QSize(200,175))
         self.mainFrame.setMinimumSize(QSize(200,60))
-        self.mainFrame.resize(QSize(200,53))
+        # self.mainFrame.resize(QSize(200,53))
 
     def standardProperty(self):
         self.video_playback.setMinimumSize(QSize(200,100))
         self.mainFrame.setMinimumSize(QSize(200,82))
         Form.setMinimumSize(QSize(200,202))
-        Form.resize(550, 369)
+        # Form.resize(550, 369)
 
     def setupMiniPlayer(self):
         self.isMini = not self.isMini
-        if self.isMini:
+        if self.isMini :
             self.miniplayer_button.setProperty("mini",True)
             self.miniplayer_button.setStyle(self.miniplayer_button.style())
             self.hide_all()
@@ -833,6 +856,16 @@ class Ui_Form(object):
                 print("[ ! PLAY PRESSED ]")
                 self.mediaPlayer.play()
 
+    def onlineThread(self):
+        '''  Thread to Handle fetching of Urls from API'''
+        import threading
+        urlThread = threading.Thread(target= self.playOnline)
+        print("Url Thread Start ")
+        urlThread.start()
+        print("Url Thread waiting to complete ")
+        # urlThread.join()
+        print("Url Thread complete ")
+
     def playOnline(self):
         if self.url_box.currentText() != '':
             print('[ ! GETTING VIDEO ONLINE ]')
@@ -855,8 +888,10 @@ class Ui_Form(object):
                 print("[ ! Error NoPluginError]")
             finally:
                 self.url_box.setCurrentText("")
+                self.url_box.clearFocus()
 
     def openFile(self):
+        '''Open File from System'''
         print('[ ! OPEN FILE ]')
         username = getpass.getuser()
         if sys.platform == 'win32':
@@ -864,55 +899,25 @@ class Ui_Form(object):
         elif sys.platform == 'linux' or sys.platform == 'Darwin':    
             path = '/home/' + username + '/Videos/' 
 
-        formats = str.join(' ',
-            ['*.%s' %str(fmt).strip('b').strip("'") for fmt in QtGui.QMovie.supportedFormats()]
-        )
-
+        
         fileName, _ = QFileDialog.getOpenFileName(self.video_playback, "Select media file",
                 path, "Video Files (*.mp3 *.mp4 *.flv *.ts *.mts *.avi *.mkv)")
         if fileName != '':
             self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
             self.play_video()
 
-    # def decodeLink(self,url):
-    #     try:
-    #         streams = streamlink.streams(url)
-    #         keys = [k for k in streams.keys()]
-    #         data = dict()
-    #         for k in keys:
-    #             data[k] = streams[k].url 
-    #         return data
-        
-    #     except streamlink.NoPluginError:
-    #         return None
-
-    # def playOnline(self):
-    #         if self.url_box.currentText() != '':
-    #             print('[ ! GETTING VIDEO ONLINE ]')
-    #             fileName = self.url_box.currentText()
-    #             self.streams = self.decodeLink(fileName)
-    #             try:
-    #                 self.mediaPlayer.setMedia(QMediaContent(QUrl(self.streams['best'])))
-    #                 self.play_video()
-    #                 self.isOnline = True
-    #                 self.addQuality()
-    #                 if self.url_box.findText(fileName, Qt.MatchExactly) < 0:
-    #                     self.url_box.addItem(fileName)
-    #                     self.scor_func(fileName)
-    #             except KeyError:
-    #                 print("[ ! Error Video Not Supported By platform]")
-    #             finally:
-    #                 self.url_box.setCurrentText("")
-
+    
     def play_video(self):
+        '''Toggle between play and pause of `Button` State '''
         print('[ ! PLAYING VIDEO ]')
         self.play_button.setEnabled(True)
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
         else:
             self.mediaPlayer.play()
-
+    
     def mediaStateChanged(self, state):
+        '''Toggle between play and pause of `Video` State '''
         print('[ ! CHANGING MEDIA STATE ]')
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.play_button.setProperty('play',False)
@@ -923,15 +928,18 @@ class Ui_Form(object):
             
 
     def stopplayback(self):
+        '''To play Video from start'''
         print('[ ! STOP PLAYBACK VIDEO ]')
         self.mediaPlayer.stop()
         self.play_video()
 
     def positionChanged(self, position):
+        '''Set Player Video to postion fetch by slider'''
         print('[ ! POSITION CHANGED ]')
         self.position_slider.setValue(position)
 
     def durationChanged(self, duration):
+        '''handle duration lables and change whenever it changes'''
         print('[ ! DURATION CHANGED ]')
         self.position_slider.setRange(0, duration)
         self.duration_status.clear()
@@ -939,16 +947,20 @@ class Ui_Form(object):
         time = mtime.addMSecs(self.mediaPlayer.duration())
         self.duration_status.setText(time.toString())
 
+    
     def setPosition(self, position):
+        '''Set Video to a specific position'''
         print('[ ! POSITION SET ]')
         self.mediaPlayer.setPosition(position)
 
     def setVolumePos(self, remain):
+        '''Set Volume slider value according to volume'''
         print('[ ! REMANING VOLUME ]')
         print(remain)
         self.volumeslider.setRange(remain, 100)
 
     def setVolume(self, vol):
+        '''Handle Volume Button icon and mediaPlayer volume'''
         print('[ ! SET VOLUME ]')
         print("set volume  = " + str(vol))
         if vol >= 0 and vol <= 100 :
@@ -966,13 +978,20 @@ class Ui_Form(object):
         self.mediaPlayer.setVolume(vol)
 
     def screenshot(self):
-        
-
+        '''Capture Only screen size of player window using screen cordinates.
+        Save to Default Pictures dictoary in System.
+        Save in png format.
+        '''
         print('[ ! SCREENSHOT ]')
+        # Getting player Window coordintes
         wincen = Form.geometry()
+
         topX = wincen.topLeft().x()
         topY = wincen.topLeft().y()
+        
         geo = self.video_playback.geometry()
+        
+        # Region is calcutaed using Video screen size and player window size
         image = pyautogui.screenshot(region=(topX, topY + 38, geo.width(), geo.height()-35))
 
         filename = "screenshot" + str(uuid.uuid4()) + ".png"
@@ -986,11 +1005,13 @@ class Ui_Form(object):
         
 
     def EscFun(self):
+        '''To disable FullScreen Mode'''
         if self.video_playback.isFullScreen():
             Form.show()
             self.video_playback.setFullScreen(False)
 
     def fullscreen_video(self):
+        '''To get into Fullscreen Mode and Normal Mode'''
         if self.mediaPlayer.isVideoAvailable():
             if self.video_playback.isFullScreen():
                 self.video_playback.setFullScreen(False)
@@ -1000,9 +1021,11 @@ class Ui_Form(object):
                 print('[ ! Full Screen ]')
                 self.video_playback.setFullScreen(True)
                 Form.hide()
+            
 
                 
     def getFormat(self):
+        '''Remove the audio formates which are Recived by Youtube link ( if exists )'''
         li = list(self.streams.keys())
         for q in li:
             if q.startswith('audio'):
@@ -1015,6 +1038,7 @@ class Ui_Form(object):
 
 
     def changeQuality(self, quality):
+        '''To change Video Quality according to User need and maintain postion of video'''
         pos = self.mediaPlayer.position()
         try:
             self.mediaPlayer.setMedia(QMediaContent(QUrl(self.streams[quality])))
@@ -1022,15 +1046,18 @@ class Ui_Form(object):
             pass
         self.setPosition(pos)
         self.mediaPlayer.play()
+        self.Quality_box.clearFocus()
 
     @staticmethod
     def handleSetting():
+        '''Open Setting Dialog Box '''
         from lib.setting import SettingDialog
         dlg = SettingDialog()
         dlg.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         dlg.exec_()
 
     def addQuality(self):
+        '''Set DropDown menu of Video resolution available'''
         self.Quality_box.clear()
         self.Quality_box.addItems(self.getFormat())
 
