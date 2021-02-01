@@ -608,7 +608,6 @@ class Ui_Form(object):
         self.time_status.setText(_translate("Form", "00:00:00"))
         self.backslash.setText(_translate("Form", "/"))
         self.duration_status.setText(_translate("Form", "00:00:00"))
-        
         # self.enter_url_label.setText(_translate("Form", statusList[4]))
 
 
