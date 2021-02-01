@@ -7,18 +7,17 @@
     opacity: 0.9;
 }
 
-.navbar-light .navbar-nav .nav-link{
-    color: white;
-}
-
-.navbar-light .navbar-nav .nav-link:hover{
+.navitems a:hover{
     color: yellow;
     text-decoration: underline;
+}
+
+.navitems a{
+    color: white;
+    padding: 10px;
 }
 
 .navbar-light .navbar-toggler{
     background-color: white;
     font-size: 15px;
 }
-
-
