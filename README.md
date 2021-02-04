@@ -60,6 +60,33 @@ Then you are good to start!
 ## How to Contribute? 💥 
 - If you wish to contribute kindly check the [CONTRIBUTION.md](https://github.com/Q-Stream/Q-Stream/blob/master/CONTRIBUTION.md)🤝
 
+## Project Admins 🌟✨
+
+<table>
+	<tr>
+    <td align="center">
+            <a href="https://github.com/VedantKhairnar">
+              <img src="https://avatars.githubusercontent.com/u/42309779?v=4" width="100px" alt=""/><br />
+              <sub><b>Vedant Khairnar</b></sub>
+            </a><br/>
+   </td>
+   <td align="center">
+            <a href="https://github.com/Anmol-tech">
+              <img src="https://avatars.githubusercontent.com/u/53795146?v=4" width="100px" alt=""/><br />
+              <sub><b>Anmol Sharma</b></sub>
+            </a><br/>
+   </td>
+  </tr>
+</table>
+
+## Contributors 🌟
+
+Thanks goes to these wonderful people ✨:
+
+<a href="https://github.com/Q-Stream/Q-Stream/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Q-Stream/Q-Stream" />
+</a>
+
 ## FAQ -
 
 1. What options does Q-Stream provide?
