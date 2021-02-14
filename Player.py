@@ -76,6 +76,10 @@ class VolSlider(QSlider):
     
 
 class Ui_Form(object):
+
+    currentMedia = dict()
+    playlist = list()
+
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(640, 400)
@@ -358,6 +362,14 @@ class Ui_Form(object):
         self.open_File_button.setObjectName("playback_button")
         self.horizontalLayout_4.addWidget(self.open_File_button)
 
+        # * Playlist button
+        self.add_to_playlist_button = QtWidgets.QPushButton(self.frame_2)
+        self.add_to_playlist_button.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.add_to_playlist_button.setStyleSheet("QPushButton{image:url(icon_sets/playlist/add_to_playlist.png);width:22px;height:22px }\n")
+        self.add_to_playlist_button.setText("")
+        self.add_to_playlist_button.setObjectName("add_to_playlist_button")
+        self.horizontalLayout_4.addWidget(self.add_to_playlist_button)
+
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem1)
         
@@ -631,6 +643,7 @@ class Ui_Form(object):
         self.always_on_top_button.clicked.connect(self.checkOnTop)
         self.play_button.clicked.connect(self.play)
         self.open_File_button.clicked.connect(self.openFile)
+        self.add_to_playlist_button.clicked.connect(self.addToPlaylist)
         # self.video_setting_button.clicked.connect(self.handleQuality)
         self.setting_button.clicked.connect(self.handleSetting)
         self.Quality_box.currentTextChanged.connect(self.handleQuality)
@@ -867,6 +880,7 @@ class Ui_Form(object):
 
     def playOnline(self):
         if self.url_box.currentText() != '':
+            self.currentMedia = {"type": "url", "src": self.url_box.currentText(), "error": False}
             print('[ ! GETTING VIDEO ONLINE ]')
             fileName = self.url_box.currentText()
             # res = requests.get('https://mediaplayerserver.herokuapp.com/', params={"key": fileName})
@@ -882,8 +896,10 @@ class Ui_Form(object):
                         self.url_box.addItem(fileName)
                         self.scor_func(fileName)
                 except KeyError:
+                    self.currentMedia["error"] = True
                     print("[ ! Error Video Not Supported By platform]")
             except json.JSONDecodeError:
+                self.currentMedia["error"] = True
                 print("[ ! Error NoPluginError]")
             finally:
                 self.url_box.clearEditText()
@@ -901,11 +917,22 @@ class Ui_Form(object):
         
         fileName, _ = QFileDialog.getOpenFileName(self.video_playback, "Select media file",
                 path, "Video Files (*.mp3 *.mp4 *.flv *.ts *.mts *.avi *.mkv)")
-        if fileName != '':
+        if fileName:
+            self.currentMedia = {"type": "url", "src": fileName, "error": False}
             self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
             self.play_video()
 
-    
+    def addToPlaylist(self):
+        
+        if self.currentMedia == {}:
+            print("Select a media file/url first!!")
+            return
+        if self.currentMedia["error"]:
+            print("Current Media cannot be added in the playlist!!")
+        else:
+            del self.currentMedia["error"]
+            self.playlist.append(self.currentMedia)
+
     def play_video(self):
         '''Toggle between play and pause of `Button` State '''
         print('[ ! PLAYING VIDEO ]')
