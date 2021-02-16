@@ -362,13 +362,22 @@ class Ui_Form(object):
         self.open_File_button.setObjectName("playback_button")
         self.horizontalLayout_4.addWidget(self.open_File_button)
 
-        # * Playlist button
+        # * Add to Playlist button
         self.add_to_playlist_button = QtWidgets.QPushButton(self.frame_2)
         self.add_to_playlist_button.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
         self.add_to_playlist_button.setStyleSheet("QPushButton{image:url(icon_sets/playlist/add_to_playlist.png);width:22px;height:22px }\n")
         self.add_to_playlist_button.setText("")
         self.add_to_playlist_button.setObjectName("add_to_playlist_button")
         self.horizontalLayout_4.addWidget(self.add_to_playlist_button)
+
+
+        # * Playlist button
+        self.playlist_button = QtWidgets.QPushButton(self.frame_2)
+        self.playlist_button.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
+        self.playlist_button.setStyleSheet("QPushButton{image:url(icon_sets/playlist/add_to_playlist.png);width:22px;height:22px }\n")
+        self.playlist_button.setText("")
+        self.playlist_button.setObjectName("playlist_button")
+        self.horizontalLayout_4.addWidget(self.playlist_button)
 
         spacerItem1 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_4.addItem(spacerItem1)
@@ -644,6 +653,7 @@ class Ui_Form(object):
         self.play_button.clicked.connect(self.play)
         self.open_File_button.clicked.connect(self.openFile)
         self.add_to_playlist_button.clicked.connect(self.addToPlaylist)
+        self.playlist_button.clicked.connect(self.playlistWidget)
         # self.video_setting_button.clicked.connect(self.handleQuality)
         self.setting_button.clicked.connect(self.handleSetting)
         self.Quality_box.currentTextChanged.connect(self.handleQuality)
@@ -926,9 +936,11 @@ class Ui_Form(object):
         
         if self.currentMedia == {}:
             print("Select a media file/url first!!")
-            return
-        if self.currentMedia["error"]:
+            return None
+        elif self.currentMedia.get("error"):
             print("Current Media cannot be added in the playlist!!")
+        elif self.currentMedia != {} and self.currentMedia.get("error", None) == None:
+            print("Media has already been added to the playlist")
         else:
             del self.currentMedia["error"]
             self.playlist.append(self.currentMedia)
@@ -1074,6 +1086,16 @@ class Ui_Form(object):
         self.mediaPlayer.play()
         self.Quality_box.clearFocus()
 
+    def playlistWidget(self):
+        '''Open Playlist Dialog Box'''
+        print("playlistWidget")
+        from lib.playlist import Ui_Playlist
+        ui = Ui_Playlist(self.playlist)
+        ui.setupUi()
+        ui.loadData()
+        ui.exec_()
+
+
     @staticmethod
     def handleSetting():
         '''Open Setting Dialog Box '''
@@ -1143,7 +1165,6 @@ class Ui_Form(object):
 
 
 if __name__ == "__main__":
-    import sys
     import sys
 
     with open("lang.bat", 'rb') as sf:
