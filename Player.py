@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimediaWidgets, QtMultimedia
 from PyQt5.QtGui import QFocusEvent, QIcon, QFont, QPalette, QColor, QMoveEvent, QKeySequence, QPainter, QImage
-from PyQt5.QtCore import QDir, QUrl, QSize, Qt, QPoint, QRect, pyqtSignal
+from PyQt5.QtCore import QDir, QModelIndex, QUrl, QSize, Qt, QPoint, QRect, pyqtSignal
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer, QVideoFrame, QAbstractVideoBuffer, QVideoSurfaceFormat, \
     QAbstractVideoSurface
 from PyQt5.QtMultimediaWidgets import QVideoWidget
@@ -1104,11 +1104,11 @@ class Ui_Form(object):
 
     def playlistTriggers(self, ui):
         ui.playall_button.clicked.connect(lambda func:self.playlistPlayClicked(ui))
-        ui.moveup_button.clicked.connect(self.playlistMoveUpClicked)
-        ui.movedown_button.clicked.connect(self.playlistMoveDownClicked)
-        ui.delete_button.clicked.connect(self.playlistDeleteClicked)
-        ui.load_button.clicked.connect(self.playlistLoadClicked)
-        ui.save_button.clicked.connect(self.playlistSaveClicked)
+        ui.moveup_button.clicked.connect(lambda func:self.playlistMoveUpClicked(ui))
+        ui.movedown_button.clicked.connect(lambda func:self.playlistMoveDownClicked(ui))
+        ui.delete_button.clicked.connect(lambda func:self.playlistDeleteClicked(ui))
+        ui.load_button.clicked.connect(lambda func:self.playlistLoadClicked(ui))
+        ui.save_button.clicked.connect(lambda func:self.playlistSaveClicked(ui))
 
     def playlistPlayClicked(self, ui):
         self.currentItem = ui.playlistTable.currentRow()
@@ -1128,7 +1128,20 @@ class Ui_Form(object):
 
     def playlistDeleteClicked(self, ui):
         # Deletes current item in the list
-        pass
+        self.currentItem = ui.playlistTable.currentRow()
+        ui.playlistTable.removeRow(self.currentItem)
+        self.playlist.pop(self.currentItem)
+        # if len(self.playlist):
+        if len(self.playlist) -1 >= self.currentItem:
+            self.currentMedia = self.playlist[self.currentItem]
+            print(self.currentItem, self.currentMedia)
+        elif len(self.playlist) > 0:
+            self.currentItem = len(self.playlist) - 1
+            self.currentMedia = self.playlist[self.currentItem]
+            print(self.currentItem, self.currentMedia)
+        else:
+            self.currentItem = 0
+            self.currentMedia = {}
 
     def playlistLoadClicked(self, ui):
         # Loads Playlist from storage
