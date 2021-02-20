@@ -78,7 +78,7 @@ class VolSlider(QSlider):
 class Ui_Form(object):
 
     currentMedia = dict()
-    playlist = list()
+    playlist = []
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -374,7 +374,7 @@ class Ui_Form(object):
         # * Playlist button
         self.playlist_button = QtWidgets.QPushButton(self.frame_2)
         self.playlist_button.setCursor(QtGui.QCursor(QtCore.Qt.ArrowCursor))
-        self.playlist_button.setStyleSheet("QPushButton{image:url(icon_sets/playlist/add_to_playlist.png);width:22px;height:22px }\n")
+        self.playlist_button.setStyleSheet("QPushButton{image:url(icon_sets/playlist/playlist_icon.png);width:22px;height:22px }\n")
         self.playlist_button.setText("")
         self.playlist_button.setObjectName("playlist_button")
         self.horizontalLayout_4.addWidget(self.playlist_button)
@@ -888,32 +888,38 @@ class Ui_Form(object):
         # urlThread.join()
         print("Url Thread complete ")
 
-    def playOnline(self):
-        if self.url_box.currentText() != '':
+
+    def playOnline(self, playlist=False):
+
+        if playlist:
+            self.currentMedia = self.playlist[self.currentItem]
+            self.currentMedia["error"] = False
+        else:
             self.currentMedia = {"type": "url", "src": self.url_box.currentText(), "error": False}
-            print('[ ! GETTING VIDEO ONLINE ]')
-            fileName = self.url_box.currentText()
-            # res = requests.get('https://mediaplayerserver.herokuapp.com/', params={"key": fileName})
-            res = requests.get('https://q-stream-media-player.herokuapp.com/', params={"key": fileName})
+
+        print('[ ! GETTING VIDEO ONLINE ]')
+        fileName = self.currentMedia["src"]
+        # res = requests.get('https://mediaplayerserver.herokuapp.com/', params={"key": fileName})
+        res = requests.get('https://q-stream-media-player.herokuapp.com/', params={"key": fileName})
+        try:
+            self.streams = json.loads(res.text)
             try:
-                self.streams = json.loads(res.text)
-                try:
-                    self.mediaPlayer.setMedia(QMediaContent(QUrl(self.streams['best'])))
-                    self.play_video()
-                    self.isOnline = True
-                    self.addQuality()
-                    if self.url_box.findText(fileName, Qt.MatchExactly) < 0:
-                        self.url_box.addItem(fileName)
-                        self.scor_func(fileName)
-                except KeyError:
-                    self.currentMedia["error"] = True
-                    print("[ ! Error Video Not Supported By platform]")
-            except json.JSONDecodeError:
+                self.mediaPlayer.setMedia(QMediaContent(QUrl(self.streams['best'])))
+                self.play_video()
+                self.isOnline = True
+                self.addQuality()
+                if self.url_box.findText(fileName, Qt.MatchExactly) < 0:
+                    self.url_box.addItem(fileName)
+                    self.scor_func(fileName)
+            except KeyError:
                 self.currentMedia["error"] = True
-                print("[ ! Error NoPluginError]")
-            finally:
-                self.url_box.clearEditText()
-                self.url_box.clearFocus()
+                print("[ ! Error Video Not Supported By platform]")
+        except json.JSONDecodeError:
+            self.currentMedia["error"] = True
+            print("[ ! Error NoPluginError]")
+        finally:
+            self.url_box.clearEditText()
+            self.url_box.clearFocus()
 
     def openFile(self):
         '''Open File from System'''
@@ -928,7 +934,7 @@ class Ui_Form(object):
         fileName, _ = QFileDialog.getOpenFileName(self.video_playback, "Select media file",
                 path, "Video Files (*.mp3 *.mp4 *.flv *.ts *.mts *.avi *.mkv)")
         if fileName:
-            self.currentMedia = {"type": "url", "src": fileName, "error": False}
+            self.currentMedia = {"type": "file", "src": fileName, "error": False}
             self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(fileName)))
             self.play_video()
 
@@ -942,6 +948,7 @@ class Ui_Form(object):
         elif self.currentMedia != {} and self.currentMedia.get("error", None) == None:
             print("Media has already been added to the playlist")
         else:
+            
             del self.currentMedia["error"]
             self.playlist.append(self.currentMedia)
 
@@ -963,7 +970,6 @@ class Ui_Form(object):
         else:
             self.play_button.setProperty('play',True)
             self.play_button.setStyle(self.play_button.style())
-            
 
     def stopplayback(self):
         '''To play Video from start'''
@@ -1093,8 +1099,45 @@ class Ui_Form(object):
         ui = Ui_Playlist(self.playlist)
         ui.setupUi()
         ui.loadData()
+        self.playlistTriggers(ui)
         ui.exec_()
 
+    def playlistTriggers(self, ui):
+        ui.playall_button.clicked.connect(lambda func:self.playlistPlayClicked(ui))
+        ui.moveup_button.clicked.connect(self.playlistMoveUpClicked)
+        ui.movedown_button.clicked.connect(self.playlistMoveDownClicked)
+        ui.delete_button.clicked.connect(self.playlistDeleteClicked)
+        ui.load_button.clicked.connect(self.playlistLoadClicked)
+        ui.save_button.clicked.connect(self.playlistSaveClicked)
+
+    def playlistPlayClicked(self, ui):
+        self.currentItem = ui.playlistTable.currentRow()
+        if self.playlist[self.currentItem]["type"] == "url":
+            self.playOnline(True)
+        else:
+            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.playlist[self.currentItem]["src"])))
+            self.play_video()
+
+    def playlistMoveUpClicked(self, ui):
+        # Move current list item to one location up
+        pass
+
+    def playlistMoveDownClicked(self, ui):
+        # Move current list item to one location down
+        pass
+
+    def playlistDeleteClicked(self, ui):
+        # Deletes current item in the list
+        pass
+
+    def playlistLoadClicked(self, ui):
+        # Loads Playlist from storage
+        pass
+
+    def playlistSaveClicked(self, ui):
+        # Saves Playlist from storage
+        pass
+    
 
     @staticmethod
     def handleSetting():
