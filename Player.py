@@ -1,3 +1,4 @@
+from lib import playlist
 from PyQt5 import QtCore, QtGui, QtWidgets, QtMultimediaWidgets, QtMultimedia
 from PyQt5.QtGui import QFocusEvent, QIcon, QFont, QPalette, QColor, QMoveEvent, QKeySequence, QPainter, QImage
 from PyQt5.QtCore import QDir, QModelIndex, QUrl, QSize, Qt, QPoint, QRect, pyqtSignal
@@ -1102,6 +1103,8 @@ class Ui_Form(object):
         self.playlistTriggers(ui)
         ui.exec_()
 
+        ui.playlistTable.insertRow
+
     def playlistTriggers(self, ui):
         ui.playall_button.clicked.connect(lambda func:self.playlistPlayClicked(ui))
         ui.moveup_button.clicked.connect(lambda func:self.playlistMoveUpClicked(ui))
@@ -1120,11 +1123,29 @@ class Ui_Form(object):
 
     def playlistMoveUpClicked(self, ui):
         # Move current list item to one location up
-        pass
+        row = ui.playlistTable.currentRow()
+        column = 0
+        if row > 0:
+            self.playlist[row], self.playlist[row-1] = self.playlist[row-1], self.playlist[row]
+            ui.playlistTable.insertRow(row-1)
+            ui.playlistTable.setItem(row-1,column,ui.playlistTable.takeItem(row+1,column))
+            ui.playlistTable.setCurrentCell(row-1,column)
+            ui.playlistTable.removeRow(row+1)
+            self.currentItem = ui.playlistTable.currentRow()
+            self.currentMedia = self.playlist[self.currentItem]
 
     def playlistMoveDownClicked(self, ui):
         # Move current list item to one location down
-        pass
+        row = ui.playlistTable.currentRow()
+        column = 0
+        if row < ui.playlistTable.rowCount()-1:
+            self.playlist[row], self.playlist[row+1] = self.playlist[row+1], self.playlist[row]
+            ui.playlistTable.insertRow(row+2)
+            ui.playlistTable.setItem(row+2,column,ui.playlistTable.takeItem(row,column))
+            ui.playlistTable.setCurrentCell(row+2,column)
+            ui.playlistTable.removeRow(row)
+            self.currentItem = ui.playlistTable.currentRow()
+            self.currentMedia = self.playlist[self.currentItem]
 
     def playlistDeleteClicked(self, ui):
         # Deletes current item in the list
@@ -1142,6 +1163,7 @@ class Ui_Form(object):
         else:
             self.currentItem = 0
             self.currentMedia = {}
+        ui.playlistTable.setCurrentCell(self.currentItem,0)
 
     def playlistLoadClicked(self, ui):
         # Loads Playlist from storage
