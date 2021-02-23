@@ -1095,62 +1095,59 @@ class Ui_Form(object):
 
     def playlistWidget(self):
         '''Open Playlist Dialog Box'''
-        print("playlistWidget")
         from lib.playlist import Ui_Playlist
-        ui = Ui_Playlist(self.playlist)
-        ui.setupUi()
-        ui.loadData()
-        self.playlistTriggers(ui)
-        ui.exec_()
+        self.playlist_ui = Ui_Playlist(self.playlist)
+        self.playlist_ui.setupUi()
+        self.playlist_ui.loadData()
+        self.playlistTriggers()
+        self.playlist_ui.exec_()
 
-        ui.playlistTable.insertRow
+    def playlistTriggers(self):
+        self.playlist_ui.playall_button.clicked.connect(lambda func:self.playlistPlayClicked())
+        self.playlist_ui.moveup_button.clicked.connect(lambda func:self.playlistMoveUpClicked())
+        self.playlist_ui.movedown_button.clicked.connect(lambda func:self.playlistMoveDownClicked())
+        self.playlist_ui.delete_button.clicked.connect(lambda func:self.playlistDeleteClicked())
+        self.playlist_ui.load_button.clicked.connect(lambda func:self.playlistLoadClicked())
+        self.playlist_ui.save_button.clicked.connect(lambda func:self.playlistSaveClicked())
 
-    def playlistTriggers(self, ui):
-        ui.playall_button.clicked.connect(lambda func:self.playlistPlayClicked(ui))
-        ui.moveup_button.clicked.connect(lambda func:self.playlistMoveUpClicked(ui))
-        ui.movedown_button.clicked.connect(lambda func:self.playlistMoveDownClicked(ui))
-        ui.delete_button.clicked.connect(lambda func:self.playlistDeleteClicked(ui))
-        ui.load_button.clicked.connect(lambda func:self.playlistLoadClicked(ui))
-        ui.save_button.clicked.connect(lambda func:self.playlistSaveClicked(ui))
-
-    def playlistPlayClicked(self, ui):
-        self.currentItem = ui.playlistTable.currentRow()
+    def playlistPlayClicked(self):
+        self.currentItem = self.playlist_ui.playlistTable.currentRow()
         if self.playlist[self.currentItem]["type"] == "url":
             self.playOnline(True)
         else:
             self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.playlist[self.currentItem]["src"])))
             self.play_video()
 
-    def playlistMoveUpClicked(self, ui):
+    def playlistMoveUpClicked(self):
         # Move current list item to one location up
-        row = ui.playlistTable.currentRow()
+        row = self.playlist_ui.playlistTable.currentRow()
         column = 0
         if row > 0:
             self.playlist[row], self.playlist[row-1] = self.playlist[row-1], self.playlist[row]
-            ui.playlistTable.insertRow(row-1)
-            ui.playlistTable.setItem(row-1,column,ui.playlistTable.takeItem(row+1,column))
-            ui.playlistTable.setCurrentCell(row-1,column)
-            ui.playlistTable.removeRow(row+1)
-            self.currentItem = ui.playlistTable.currentRow()
+            self.playlist_ui.playlistTable.insertRow(row-1)
+            self.playlist_ui.playlistTable.setItem(row-1,column,self.playlist_ui.playlistTable.takeItem(row+1,column))
+            self.playlist_ui.playlistTable.setCurrentCell(row-1,column)
+            self.playlist_ui.playlistTable.removeRow(row+1)
+            self.currentItem = self.playlist_ui.playlistTable.currentRow()
             self.currentMedia = self.playlist[self.currentItem]
 
-    def playlistMoveDownClicked(self, ui):
+    def playlistMoveDownClicked(self):
         # Move current list item to one location down
-        row = ui.playlistTable.currentRow()
+        row = self.playlist_ui.playlistTable.currentRow()
         column = 0
-        if row < ui.playlistTable.rowCount()-1:
+        if row < self.playlist_ui.playlistTable.rowCount()-1:
             self.playlist[row], self.playlist[row+1] = self.playlist[row+1], self.playlist[row]
-            ui.playlistTable.insertRow(row+2)
-            ui.playlistTable.setItem(row+2,column,ui.playlistTable.takeItem(row,column))
-            ui.playlistTable.setCurrentCell(row+2,column)
-            ui.playlistTable.removeRow(row)
-            self.currentItem = ui.playlistTable.currentRow()
+            self.playlist_ui.playlistTable.insertRow(row+2)
+            self.playlist_ui.playlistTable.setItem(row+2,column,self.playlist_ui.playlistTable.takeItem(row,column))
+            self.playlist_ui.playlistTable.setCurrentCell(row+2,column)
+            self.playlist_ui.playlistTable.removeRow(row)
+            self.currentItem = self.playlist_ui.playlistTable.currentRow()
             self.currentMedia = self.playlist[self.currentItem]
 
-    def playlistDeleteClicked(self, ui):
+    def playlistDeleteClicked(self):
         # Deletes current item in the list
-        self.currentItem = ui.playlistTable.currentRow()
-        ui.playlistTable.removeRow(self.currentItem)
+        self.currentItem = self.playlist_ui.playlistTable.currentRow()
+        self.playlist_ui.playlistTable.removeRow(self.currentItem)
         self.playlist.pop(self.currentItem)
         # if len(self.playlist):
         if len(self.playlist) -1 >= self.currentItem:
@@ -1163,16 +1160,63 @@ class Ui_Form(object):
         else:
             self.currentItem = 0
             self.currentMedia = {}
-        ui.playlistTable.setCurrentCell(self.currentItem,0)
+        self.playlist_ui.playlistTable.setCurrentCell(self.currentItem,0)
 
-    def playlistLoadClicked(self, ui):
+    def playlistLoadClicked(self):
         # Loads Playlist from storage
-        pass
+        username = getpass.getuser()
+        if sys.platform == 'win32':
+            path = 'C:/Users/' + username + '/Videos/'
+        elif sys.platform == 'linux' or sys.platform == 'Darwin':    
+            path = '/home/' + username + '/Videos/' 
 
-    def playlistSaveClicked(self, ui):
+        fileName, _ = QFileDialog.getOpenFileName(self.video_playback, "Select media file",
+                path, "Text Files (*.json *.txt)")
+        if fileName:
+            import json
+            with open(fileName, "rb") as fin:
+                content = json.load(fin)
+                isValid = self.validatePlaylistData(content)
+                if isValid:
+                    self.playlist = content["data"]
+                    self.currentItem = 0
+                    self.currentMedia = {}
+                    self.playlist_ui.updatePlaylistData(self.playlist)
+                    self.playlist_ui.loadData()
+                else:
+                    print("Selected File contains Invalid Playlist Data")
+        else:
+            print("Invalid File Selected")
+
+
+    def playlistSaveClicked(self):
         # Saves Playlist from storage
-        pass
-    
+        fileName, _ = QFileDialog.getSaveFileName(self.playlist_ui,"Save Playlist")
+        if fileName:
+            f = open(fileName, 'w')
+            f.write(str(json.dumps({"data":self.playlist})))
+            f.close()
+
+    @staticmethod
+    def validatePlaylistData(content):
+        playlistSchema = {
+            "type": "object",
+            "properties": {
+                "type": { "type": "string" },
+                "src": { "type": "string" },
+                "error": { "type": "boolean" }
+            },
+            "required": ["type", "src"]
+        }
+        import jsonschema
+        try:
+            for playlistItem in content["data"]:
+                jsonschema.validate(instance=playlistItem, schema=playlistSchema)
+        except jsonschema.exceptions.ValidationError as err:
+            print(err)
+            return False
+        print("Validation Successful")
+        return True
 
     @staticmethod
     def handleSetting():

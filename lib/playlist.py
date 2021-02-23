@@ -1,11 +1,8 @@
 #       TODO:
-#  *        Playlist Play Option
-#  *        Playlist show
 #  *        Media remove option
 #  *        Media Up/ Down Option
 #  *        Playlist Save Option
 #  *        Playlist Load Option
-#  *        Play next
 
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem
@@ -81,6 +78,9 @@ class Ui_Playlist(QDialog):
         self.delete_button.setText(_translate("Playlist", "Delete"))
         self.load_button.setText(_translate("Playlist", "Load"))
         self.save_button.setText(_translate("Playlist", "Save"))
+
+    def updatePlaylistData(self, playlist):
+        self.playlist_data = playlist
 
     def loadData(self):
         self.playlistTable.setRowCount(len(self.playlist_data))
