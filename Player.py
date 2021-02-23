@@ -1297,7 +1297,7 @@ if __name__ == "__main__":
     app.setWindowIcon(QIcon('play-button.ico'))
     # Form = QtWidgets.QWidget()
     Form = window()
-    Form.setWindowFlags(Qt.WindowStaysOnTopHint | Qt.FramelessWindowHint)
+    Form.setWindowFlags(Qt.FramelessWindowHint)
     ui = Ui_Form()
     ui.setupUi(Form)
     Form.show()
