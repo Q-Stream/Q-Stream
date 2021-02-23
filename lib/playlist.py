@@ -1,9 +1,3 @@
-#       TODO:
-#  *        Media remove option
-#  *        Media Up/ Down Option
-#  *        Playlist Save Option
-#  *        Playlist Load Option
-
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QDialog, QTableWidgetItem
 
