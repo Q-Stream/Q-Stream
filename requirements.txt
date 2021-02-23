@@ -6,3 +6,4 @@ streamlink>=1.4.1
 PyAutoGUI>=0.9.50
 Flask>=1.1.2
 googletrans2>=2.3.0
+jsonschema>=3.2.0
