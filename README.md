@@ -44,7 +44,6 @@ You can get it from the links specified or run ```pip install -r requirements.tx
       sudo apt install gstreamer1.0-plugins-bad-faad
       sudo apt-get install gstreamer1.0-libav
       sudo apt-get install --reinstall libxcb-xinerama0
-      
       ```
 
 ## Using Q-Stream -
